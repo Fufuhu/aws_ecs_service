@@ -1,6 +1,6 @@
 
 module "vpc" {
-  source = "git@github.com:Fufuhu/aws_vpc_terraform.git//modules/vpc"
+  source = "git@github.com:Fufuhu/aws_vpc_terraform.git//modules/vpc?ref=v0.2.0"
   service_name = "sample"
   env    = terraform.workspace
   vpc_cidr_block = "10.0.0.0/16"
