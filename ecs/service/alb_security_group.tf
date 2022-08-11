@@ -7,4 +7,8 @@ module "alb_security_group" {
   security_group_ingress_cidrs = [
     "0.0.0.0/0" # 環境ごとに変えられるようにしておくとより良い
   ]
+  security_group_ingress_ports = [
+    80,
+    443
+  ]
 }
