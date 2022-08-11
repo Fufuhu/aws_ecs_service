@@ -29,6 +29,14 @@ variable "security_group_additional_tags" {
   }
 }
 
+variable "security_group_ingress_ports" {
+  type = list(number)
+  description = "内向け通信(ingress)として許可するポート番号のリストです"
+  default = [
+    80
+  ]
+}
+
 variable "security_group_ingress_cidrs" {
   type        = list(string)
   description = "内向け通信(ingress)として許可するCIDRのリストです"
@@ -84,4 +92,12 @@ locals {
     var.security_group_additional_tags,
     local.default_tags
   )
+}
+
+locals {
+  # https://www.terraform.io/language/functions/setproduct
+  # https://qiita.com/sekai/items/93aa4978f8cfc87e0913
+  ingress_cidr_ports = [ for v in var.security_group_ingress_ports : tostring(v)]
+  ingress_sg_rules = { for v in setproduct(var.security_group_ingress_ports, var.security_group_ingress_sgs) : join(",", v) => v }
+  ingress_self_rules = var.security_group_ingress_allow_self ? [ for v in var.security_group_ingress_ports : tostring(v)] : []
 }

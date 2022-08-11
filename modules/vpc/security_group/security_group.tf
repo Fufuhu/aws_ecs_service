@@ -4,64 +4,37 @@ resource "aws_security_group" "security_group" {
   tags   = local.security_group_tags
 }
 
-resource "aws_security_group_rule" "security_group_rule_ingress_cidr_http" {
+
+resource "aws_security_group_rule" "ingress_cidr_security_group_rules" {
+  for_each = toset(local.ingress_cidr_ports)
   security_group_id = aws_security_group.security_group.id
   type              = "ingress"
-  from_port         = 80
-  to_port           = 80
-  protocol          = "tcp"
-  cidr_blocks       = var.security_group_ingress_cidrs
+  protocol          = "TCP"
+  from_port         = each.value
+  to_port           = each.value
+  cidr_blocks = var.security_group_ingress_cidrs
 }
 
-resource "aws_security_group_rule" "security_group_rule_ingress_cidr_https" {
+resource "aws_security_group_rule" "ingress_sg_security_group_rules" {
+  for_each = local.ingress_sg_rules
+  type              = "ingress"
+  security_group_id = aws_security_group.security_group.id
+  protocol          = "TCP"
+  from_port         = each.value[0]
+  to_port           = each.value[0]
+  source_security_group_id = each.value[1]
+}
+
+resource "aws_security_group_rule" "ingress_self_security_group_rule" {
+  for_each = toset(local.ingress_self_rules)
   security_group_id = aws_security_group.security_group.id
   type              = "ingress"
-  from_port         = 443
-  to_port           = 443
+  from_port         = each.value
+  to_port           = each.value
   protocol          = "tcp"
-  cidr_blocks       = var.security_group_ingress_cidrs
+  self              = true
 }
 
-resource "aws_security_group_rule" "security_group_rule_ingress_http_self" {
-  count             = var.security_group_ingress_allow_self ? 1 : 0
-  security_group_id = aws_security_group.security_group.id
-  type              = "ingress"
-  from_port         = 80
-  to_port           = 80
-  protocol          = "tcp"
-  self              = var.security_group_ingress_allow_self
-}
-
-resource "aws_security_group_rule" "security_group_rule_ingress_https_self" {
-  count             = var.security_group_ingress_allow_self ? 1 : 0
-  security_group_id = aws_security_group.security_group.id
-  type              = "ingress"
-  from_port         = 443
-  to_port           = 443
-  protocol          = "tcp"
-  self              = var.security_group_ingress_allow_self
-}
-
-
-resource "aws_security_group_rule" "security_group_rule_ingress_http_sgs" {
-  for_each                 = toset(var.security_group_ingress_sgs)
-  security_group_id        = aws_security_group.security_group.id
-  type                     = "ingress"
-  protocol                 = "tcp"
-  from_port                = 80
-  to_port                  = 80
-  source_security_group_id = each.value
-}
-
-resource "aws_security_group_rule" "security_group_rule_ingress_https_sgs" {
-  for_each                 = toset(var.security_group_ingress_sgs)
-  security_group_id        = aws_security_group.security_group.id
-  type                     = "ingress"
-  protocol                 = "tcp"
-  from_port                = 443
-  to_port                  = 443
-  source_security_group_id = each.value
-}
 
 resource "aws_security_group_rule" "security_group_rule_egress" {
   security_group_id = aws_security_group.security_group.id
