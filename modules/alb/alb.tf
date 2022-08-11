@@ -7,6 +7,8 @@ resource "aws_lb" "alb" {
 
   subnets = var.alb_subnet_ids # ロードバランサーを配置するサブネットIDのリスト
 
+  security_groups = var.alb_security_group_ids
+
   access_logs {
     bucket  = aws_s3_bucket.log_bucket.bucket
     enabled = true

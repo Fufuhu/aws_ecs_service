@@ -24,7 +24,7 @@ variable "alb_additional_tags" {
   default     = {}
 
   validation {
-    condition     = length(setintersection(keys(var.alb_additional_tags), ["ServiceName", "Env", "Role"])) == 0
+    condition     = length(setintersection(keys(var.alb_additional_tags), ["ServiceName", "ServiceSuffix","Env"])) == 0
     error_message = "Key names, ServiceName, ServiceSuffix, Env are reserved. Not allowed to use them. "
   }
 }
@@ -37,6 +37,12 @@ variable "alb_subnet_ids" {
     condition     = length(var.alb_subnet_ids) > 0
     error_message = "Specify at least 1 subnet to place application loadbalancer"
   }
+}
+
+variable "alb_security_group_ids" {
+  type = list(string)
+  description = "ALBに付与するセキュリティグループIDのリスト"
+  default = []
 }
 
 # ALBのログ格納用S3バケット設定
