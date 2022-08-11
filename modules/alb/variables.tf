@@ -6,8 +6,9 @@ variable "service_name" {
 variable "service_suffix" {
   type        = string
   description = <<DESC
-サービス名ののサフィックス
+サービス名のサフィックス
 DESC
+  default = ""
 }
 
 variable "env" {
@@ -54,10 +55,26 @@ variable "alb_log_expiration_in_days" {
 
 
 locals {
+
+  default_tags = var.service_suffix == "" ? {
+    ServiceName = var.service_name
+    Env         = var.env
+  } : {
+    ServiceName   = var.service_name
+    ServiceSuffix = var.service_suffix
+    Env           = var.env
+  }
+
   alb_name             = var.service_suffix == "" ? "${var.service_name}-${var.env}-alb" : "${var.service_name}-${var.service_suffix}-${var.env}-alb"
   alb_deletion_protect = can(regex("^prod$|^prd$", var.env)) ? true : false # var.envがprodまたはprdだったらALBは削除保護する
+  alb_tags = merge(
+    var.alb_additional_tags,
+    local.default_tags
+  )
 
   # ログ格納バケットの設定
   alb_log_bucket_name  = "${local.alb_name}-log-bucket"
   alb_log_bucket_force_destroy = can(regex("^prod$|^prd$", var.env)) ? false : true # var.envがprodまたはprdだったらログバケットのforce_destroyは無効
+  alb_log_bucket_lifecycle_id = "${local.alb_name}-log-lifecycle"
+
 }
