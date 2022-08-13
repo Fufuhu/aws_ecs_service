@@ -18,3 +18,8 @@ output "alb_fqdn" {
   description = "ALBに付与されたFQDNです"
   value = aws_lb.alb.dns_name
 }
+
+output "alb_target_group_arn" {
+  description = "ALBに付与されたターゲットグループのARN"
+  value = aws_alb_target_group.target_group.arn
+}
