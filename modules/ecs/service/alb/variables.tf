@@ -20,7 +20,7 @@ variable "env" {
 
 variable "alb_additional_tags" {
   type        = map(string)
-  description = "ALBに付与する追加リソースタグ"
+  description = "ALBとその関連リソースに付与する追加リソースタグ"
   default     = {}
 
   validation {
