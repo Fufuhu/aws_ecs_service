@@ -5,7 +5,7 @@ locals {
   container_definitions = jsonencode([
     {
       name         = "nginx"
-      image        = "nginx:1.21"
+      image        = "public.ecr.aws/nginx/nginx:1.21"
       cpu          = 1024
       memory       = 2048
       essential    = true
