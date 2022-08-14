@@ -40,9 +40,7 @@ variable "security_group_ingress_ports" {
 variable "security_group_ingress_cidrs" {
   type        = list(string)
   description = "内向け通信(ingress)として許可するCIDRのリストです"
-  default     = [
-    "0.0.0.0/0"
-  ]
+  default     = []
 }
 
 variable "security_group_ingress_allow_self" {
@@ -57,6 +55,7 @@ variable "security_group_ingress_sgs" {
   default     = []
 }
 
+
 variable "security_group_egress_cidrs" {
   type        = list(string)
   description = "外向け通信(egress)として許可するCIDRのリストです"
@@ -69,6 +68,12 @@ variable "security_group_egress_allow_self" {
   type        = bool
   description = "外向け通信(egress)の宛先セキュリティグループとして自身のSGを許可するか否かです"
   default     = false
+}
+
+variable "security_group_egress_sgs" {
+  type        = list(string)
+  description = "外向け通信(egress)との送信元セキュリティグループとして許可するセキュリティグループIDのリストです"
+  default     = []
 }
 
 variable "vpc_id" {
