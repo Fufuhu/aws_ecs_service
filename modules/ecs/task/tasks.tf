@@ -12,7 +12,7 @@ resource "aws_ecs_task_definition" "task_definition" {
 
   # 権限系
   task_role_arn      = var.task_role_arn
-  execution_role_arn = var.task_role_arn
+  execution_role_arn = var.task_exec_role_arn
 
   # コンテナ定義
   container_definitions = var.container_definition
