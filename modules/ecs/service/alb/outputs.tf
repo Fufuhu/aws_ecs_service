@@ -19,6 +19,14 @@ output "alb_fqdn" {
   value = aws_lb.alb.dns_name
 }
 
+output "alb_zone_id" {
+  description = <<DESC
+ALBのホステッドゾーンIDです。
+Route53でエイリアスレコードを作成する際に利用します。
+DESC
+  value = aws_lb.alb.zone_id
+}
+
 output "alb_target_group_arn" {
   description = "ALBに付与されたターゲットグループのARN"
   value = aws_alb_target_group.target_group.arn
