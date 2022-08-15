@@ -31,7 +31,7 @@ jobs:
       - name: Assume role
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: ${{ secrets.IAM_ARN_TO_PUSH_IMAGE }}
+          role-to-assume: ${{ secrets.IAM_ROLE_ARN_TO_PUSH_IMAGE }}
           aws-region: ap-northeast-1
       - name: Login to Amazon ECR
         id: login-ecr
