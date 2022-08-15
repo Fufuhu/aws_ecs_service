@@ -15,7 +15,7 @@ variable "env" {
 }
 
 variable "log_retention_in_days" {
-  description = "ロググループにログを保持する機関です"
+  description = "ロググループにログを保持する期間です"
   type        = number
   default     = 30
 }
