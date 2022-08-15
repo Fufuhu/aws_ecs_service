@@ -43,7 +43,7 @@ variable "task_exec_role_additional_tags" {
 }
 
 variable "task_role_maneged_policy_arns" {
-  description = "タスクロールに付与するマネージドロールARNのリストをしていします"
+  description = "タスクロールに付与する管理ポリシーARNのリストをしていします"
   type        = list(string)
   default     = []
 
@@ -61,12 +61,6 @@ variable "task_role_inline_policies" {
 DESC
   type        = map(string)
   default     = {}
-}
-
-variable "task_role_policy_arns" {
-  description = "タスクロールに付与するマネージドロールARNのリストです"
-  type        = list(string)
-  default     = []
 }
 
 locals {
