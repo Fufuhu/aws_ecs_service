@@ -43,11 +43,6 @@ variable "security_group_ingress_cidrs" {
   default     = []
 }
 
-variable "security_group_ingress_allow_self" {
-  type        = bool
-  description = "内向け通信(ingress)として自身のSGを許可するか否かです"
-  default     = false
-}
 
 variable "security_group_ingress_sgs" {
   type        = list(string)
@@ -55,6 +50,11 @@ variable "security_group_ingress_sgs" {
   default     = []
 }
 
+variable "security_group_ingress_allow_self" {
+  type        = bool
+  description = "内向け通信(ingress)として自身のSGを許可するか否かです"
+  default     = false
+}
 
 variable "security_group_egress_cidrs" {
   type        = list(string)
