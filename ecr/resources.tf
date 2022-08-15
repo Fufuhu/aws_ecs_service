@@ -18,5 +18,5 @@ module "iam_role" {
     "ImagePush" = module.ecr.image_push_policy_document
   }
   github_organization_name = "Fufuhu"
-  github_repository_name = "aws_ecr"
+  github_repository_name = "aws_ecs_service"
 }
