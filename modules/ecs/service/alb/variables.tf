@@ -46,7 +46,6 @@ variable "alb_security_group_ids" {
 }
 
 # ALBのログ格納用S3バケット設定
-
 variable "alb_log_transition_in_days" {
   type        = number
   description = "ALBのログをS3に保管した後標準IAに移行するまでの期間"
