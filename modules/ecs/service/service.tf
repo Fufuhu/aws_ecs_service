@@ -2,20 +2,25 @@
 resource "aws_ecs_service" "service" {
   name = local.ecs_service_name
 
-  cluster = var.ecs_service_cluster_arn
-
   # 起動タイプはFARGATE, スケジューリング戦略はREPLICA固定
   launch_type = "FARGATE"
   scheduling_strategy = "REPLICA"
 
+  cluster = var.ecs_service_cluster_arn
+
+  #タスク定義
   task_definition = var.ecs_service_task_definition_arn
 
+  # 実行するタスク数
   desired_count = var.ecs_service_task_desired_count
   deployment_maximum_percent = var.ecs_service_task_maximum_percent
   deployment_minimum_healthy_percent = var.ecs_service_task_minimum_percent
 
+  # ECS Execの有効化有無
   enable_execute_command = var.ecs_service_enable_execute_command
 
+
+  # ネットワーク設定
   network_configuration {
     subnets = var.ecs_service_subnets
     security_groups = var.ecs_service_security_groups

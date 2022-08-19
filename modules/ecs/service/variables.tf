@@ -1,6 +1,8 @@
 variable "service_name" {
   type        = string
-  description = "サービス名"
+  description = <<DESC
+ECSサービスではなく、ECSサービスが構成する広義のサービス名
+DESC
 }
 
 variable "service_suffix" {
