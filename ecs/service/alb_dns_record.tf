@@ -1,6 +1,6 @@
 resource "aws_route53_record" "record" {
   zone_id = data.aws_route53_zone.zone.id
-  name = "terraform-sample.${data.aws_route53_zone.zone.name}"
+  name = local.dns_a_record
   type = "A"
 
   alias {
