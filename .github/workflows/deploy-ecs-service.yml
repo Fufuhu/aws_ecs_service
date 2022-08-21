@@ -62,7 +62,7 @@ jobs:
         id: render-task-definition
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         env:
-          DOCKER_IMAGE_REPOSITORY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.${{ env.AWS_REGION_NAME }}.amazonaws.com/${{ env.SERVICE_NAME }}-${{ github.event.inputs.environment }}-web
+          DOCKER_IMAGE_REPOSITORY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION_NAME }}.amazonaws.com/${{ env.SERVICE_NAME }}-${{ github.event.inputs.environment }}-web
         with:
           task-definition: taskdef.json
           container-name: nginx
