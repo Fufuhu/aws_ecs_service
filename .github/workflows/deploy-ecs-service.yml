@@ -36,7 +36,7 @@ jobs:
       - name: Assume role
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/${{ env.SERVICE_NAME}}-${{ github.event.inputs.environment }}-role
           aws-region: ${{ env.AWS_REGION_NAME }}
       - name: Login to Amazon ECR
         id : login-ecr
