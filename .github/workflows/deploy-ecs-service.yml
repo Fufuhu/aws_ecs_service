@@ -5,11 +5,12 @@ on:
       environment:
         description: Environment to deploy service.
         required: true
+        default: dev
       deploy_target:
         description: Tag name or branch name to deploy e.g. v1.0.0, develop ~
         required: true
+        default: main
 env:
-  AWS_ACCOUNT_ID: {{secrets.AWS_ACCOUNT_ID}}
   AWS_REGION_NAME: ap-northeast-1
   SERVICE_NAME: sample
 permissions:
@@ -36,7 +37,7 @@ jobs:
       - name: Assume role
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/${{ env.SERVICE_NAME}}-${{ github.event.inputs.environment }}-role
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ env.SERVICE_NAME}}-${{ github.event.inputs.environment }}-role
           aws-region: ${{ env.AWS_REGION_NAME }}
       - name: Login to Amazon ECR
         id : login-ecr
@@ -44,7 +45,7 @@ jobs:
       - name: Check docker image exists
         id: check-docker-image
         env:
-          DOCKER_IMAGE_REPOSITORY: ${{ env.AWS_ACCOUNT_ID }}.dkr.${{ env.AWS_REGION_NAME }}.amazonaws.com/${{ env.SERVICE_NAME }}-${{ github.event.inputs.environment }}-web
+          DOCKER_IMAGE_REPOSITORY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.${{ env.AWS_REGION_NAME }}.amazonaws.com/${{ env.SERVICE_NAME }}-${{ github.event.inputs.environment }}-web
         run: |
           docker pull $DOCKER_IMAGE_REPOSITORY:${{ steps.get-image-tag.outputs.image-tag }}
           if [ "$?" -ne 0 ]; then
@@ -61,7 +62,7 @@ jobs:
         id: render-task-definition
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         env:
-          DOCKER_IMAGE_REPOSITORY: ${{ env.AWS_ACCOUNT_ID }}.dkr.${{ env.AWS_REGION_NAME }}.amazonaws.com/${{ env.SERVICE_NAME }}-${{ github.event.inputs.environment }}-web
+          DOCKER_IMAGE_REPOSITORY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.${{ env.AWS_REGION_NAME }}.amazonaws.com/${{ env.SERVICE_NAME }}-${{ github.event.inputs.environment }}-web
         with:
           task-definition: taskdef.json
           container-name: nginx
