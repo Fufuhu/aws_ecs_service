@@ -45,7 +45,7 @@ jobs:
       - name: Check docker image exists
         id: check-docker-image
         env:
-          DOCKER_IMAGE_REPOSITORY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.${{ env.AWS_REGION_NAME }}.amazonaws.com/${{ env.SERVICE_NAME }}-${{ github.event.inputs.environment }}-web
+          DOCKER_IMAGE_REPOSITORY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION_NAME }}.amazonaws.com/${{ env.SERVICE_NAME }}-${{ github.event.inputs.environment }}-web
         run: |
           docker pull $DOCKER_IMAGE_REPOSITORY:${{ steps.get-image-tag.outputs.image-tag }}
           if [ "$?" -ne 0 ]; then
