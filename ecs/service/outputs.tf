@@ -31,3 +31,15 @@ output "security_group_tags" {
 output "https_endpoint_url" {
   value = "https://${aws_route53_record.record.name}"
 }
+
+output "ecs_cluster_name" {
+  value = data.aws_ecs_cluster.cluster.cluster_name
+}
+
+output "ecs_service_name" {
+  value = module.ecs_service.ecs_service_arn
+}
+
+output "github_actions_workflow_iam_role_arn" {
+  value = module.github_actions_workflow_iam_role.iam_role_arn
+}
