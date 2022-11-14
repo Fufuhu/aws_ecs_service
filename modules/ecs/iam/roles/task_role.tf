@@ -13,6 +13,6 @@ resource "aws_iam_role_policy_attachment" "task_role_policy_attachment" {
 resource "aws_iam_role_policy" "task_role_inline_policies" {
   for_each = var.task_role_inline_policies
   name     = each.key
-  role     = aws_iam_role.task_role.arn
+  role     = aws_iam_role.task_role.name
   policy   = each.value
 }
