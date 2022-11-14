@@ -19,9 +19,9 @@ resource "aws_ecs_task_definition" "task_definition" {
 
   tags = local.task_resource_tags
 
-  lifecycle {
-    ignore_changes = [
-      container_definitions
-    ]
-  }
+  // lifecycle {
+  //   ignore_changes = [
+  //     container_definitions
+  //   ]
+  // }
 }
