@@ -6,7 +6,7 @@ resource "aws_iam_role" "task_role" {
 
 resource "aws_iam_role_policy_attachment" "task_role_policy_attachment" {
   for_each   = toset(var.task_role_maneged_policy_arns)
-  role       = aws_iam_role.task_role.arn
+  role       = aws_iam_role.task_role.name
   policy_arn = each.key
 }
 
