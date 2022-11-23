@@ -6,7 +6,7 @@ resource "aws_security_group" "security_group" {
 
 
 locals {
-   ingress_ports = len(var.security_group_ingress_cidrs) != 0 ? toset(local.ingress_cidr_ports) : toset([])
+   ingress_ports = length(var.security_group_ingress_cidrs) != 0 ? toset(local.ingress_cidr_ports) : toset([])
 }
 
 resource "aws_security_group_rule" "ingress_cidr_security_group_rules" {
