@@ -5,8 +5,12 @@ resource "aws_security_group" "security_group" {
 }
 
 
+locals {
+   ingress_ports = len(var.security_group_ingress_cidrs) != 0 ? toset(local.ingress_cidr_ports) : toset([])
+}
+
 resource "aws_security_group_rule" "ingress_cidr_security_group_rules" {
-  for_each          = len(var.security_group_ingress_cidrs) != 0 ? toset(local.ingress_cidr_ports) : []
+  for_each          =  local.ingress_ports
   security_group_id = aws_security_group.security_group.id
   type              = "ingress"
   protocol          = "TCP"
