@@ -78,7 +78,7 @@ locals {
   default_tags = var.service_suffix == "" ? {
     ServiceName = var.service_name
     Env         = var.env
-  } : {
+    } : {
     ServiceName   = var.service_name
     ServiceSuffix = var.service_suffix
     Env           = var.env
