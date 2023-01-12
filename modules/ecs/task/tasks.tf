@@ -1,5 +1,5 @@
 resource "aws_ecs_task_definition" "task_definition" {
-  family                   = local.task_family_name
+  family = local.task_family_name
   requires_compatibilities = [
     "FARGATE"
   ]
@@ -16,6 +16,8 @@ resource "aws_ecs_task_definition" "task_definition" {
 
   # コンテナ定義
   container_definitions = var.container_definition
+
+  skip_destroy = true
 
   tags = local.task_resource_tags
 
