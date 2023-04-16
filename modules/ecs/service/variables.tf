@@ -146,6 +146,12 @@ DESC
   }
 }
 
+variable "ecs_service_health_check_grace_period_seconds" {
+  type = number
+  description = "ヘルスチェックを行うまでの待機時間(秒)"
+  default = 120
+  nullable = true
+}
 
 
 locals {

@@ -15,6 +15,7 @@ resource "aws_ecs_service" "service" {
   desired_count = var.ecs_service_task_desired_count
   deployment_maximum_percent = var.ecs_service_task_maximum_percent
   deployment_minimum_healthy_percent = var.ecs_service_task_minimum_percent
+  health_check_grace_period_seconds = var.ecs_service_health_check_grace_period_seconds
 
   # ECS Execの有効化有無
   enable_execute_command = var.ecs_service_enable_execute_command
