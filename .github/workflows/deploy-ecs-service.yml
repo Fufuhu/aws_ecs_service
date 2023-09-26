@@ -28,12 +28,9 @@ jobs:
       - name: Get image tag
         id: get-image-tag
         run: |
-          COMMIT_ID=`git rev-parse HEAD`
           SHORT_COMMIT_ID=`git rev-parse --short HEAD`
           REF=`echo ${{ github.event.inputs.deploy_target }} | sed  -e 's/\//-/g'`
-          echo "::set-output name=commit-id::${COMMIT_ID}"
-          echo "::set-output name=short-commit-id::${SHORT_COMMIT_ID}"
-          echo "::set-output name=image-tag::${REF}-${SHORT_COMMIT_ID}"
+          echo "image-tag=${REF}-${SHORT_COMMIT_ID}" >> $GITHUB_OUTPUT
       - name: Assume role
         uses: aws-actions/configure-aws-credentials@v1
         with:
