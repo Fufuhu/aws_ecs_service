@@ -27,7 +27,7 @@ jobs:
         run: |
           SHORT_COMMIT_ID=`git rev-parse --short HEAD`
           REF=`echo ${{ github.event.inputs.build_target }} | sed  -e 's/\//-/g'`
-          echo "::set-output name=image-tag::${REF}-${SHORT_COMMIT_ID}"
+          echo "image-tag=${REF}-${SHORT_COMMIT_ID}" >> $GITHUB_OUTPUT
       - name: Assume role
         uses: aws-actions/configure-aws-credentials@v1
         with:
