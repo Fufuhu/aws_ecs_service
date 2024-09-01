@@ -6,6 +6,14 @@ resource "aws_s3_bucket" "log_bucket" {
   tags = local.alb_tags
 }
 
+resource "aws_s3_bucket_ownership_controls" "log_bucket_ownership_controls" {
+  bucket = aws_s3_bucket.log_bucket.id
+
+  rule {
+      object_ownership = "BucketOwnerEnforced"
+  }
+}
+
 resource "aws_s3_bucket_public_access_block" "log_bucket_public_access_block" {
   bucket = aws_s3_bucket.log_bucket.id
 
