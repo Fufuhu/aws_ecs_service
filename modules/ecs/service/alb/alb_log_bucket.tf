@@ -6,11 +6,6 @@ resource "aws_s3_bucket" "log_bucket" {
   tags = local.alb_tags
 }
 
-resource "aws_s3_bucket_acl" "log_bucket_acl" {
-  bucket = aws_s3_bucket.log_bucket.id
-  acl    = "private"
-}
-
 resource "aws_s3_bucket_public_access_block" "log_bucket_public_access_block" {
   bucket = aws_s3_bucket.log_bucket.id
 
