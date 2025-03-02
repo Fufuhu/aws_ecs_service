@@ -16,7 +16,7 @@ module "ecs_service" {
   ecs_service_security_groups = [
     module.ecs_security_group.security_group_id
   ]
-  ecs_service_task_definition_arn = data.aws_ecs_task_definition.task_definition.arn
+  ecs_service_task_definition_arn = data.aws_ecs_task_definition.task_definition.arn_without_revision
 
   # ロードバランサ設定
   ecs_service_alb_target_group_arn = module.alb.alb_target_group_arn
