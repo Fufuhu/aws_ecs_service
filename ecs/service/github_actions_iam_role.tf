@@ -73,6 +73,17 @@ data "aws_iam_policy_document" "deploy_service" {
       "arn:aws:iam::${data.aws_caller_identity.caller_identity.account_id}:role/${local.service_name}-${terraform.workspace}-task-exec-role"
     ]
   }
+
+  statement {
+    sid     = "TagResourceOnTaskDefinition"
+    effect  = "Allow"
+    actions = [
+      "ecs:TagResource"
+    ]
+    resources = [
+      "${data.aws_ecs_task_definition.task_definition.arn_without_revision}:*",
+    ]
+  }
 }
 
 module "github_actions_workflow_iam_role" {
